@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     app: hcabnettek-devops-project
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 80
       targetPort: 80
