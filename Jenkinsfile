@@ -1,15 +1,22 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:14-alpine' 
-      args '-p 3000:3000' 
-    }
-  }
+  agent { label 'kubepod' }
 
   stages {
-    stage('Build') { 
+    stage('Checkout Source') {
       steps {
-          sh 'npm install' 
+        git url:'https://github.com/hcabnettek/react-redux-petstore.git', branch:'master'
+      }
+    }
+
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "app_deploy.yml", kubeconfigId: "mykubeconfig")
+        }
+
+        script {
+          kubernetesDeploy(configs: "app_service.yml", kubeconfigId: "mykubeconfig")
+        }
       }
     }
   }

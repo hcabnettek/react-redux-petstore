@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: hcabnetteky-devops-project
+      app: hcabnettek-devops-project
   replicas: 2 # tells deployment to run 2 pods matching the template
   strategy:
     type: RollingUpdate
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: hcabnettek-devops-project
-        image: yankils/simple-devops-image
+        image: hcabnettek/react-redux-petstore:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 80
