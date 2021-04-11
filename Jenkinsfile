@@ -1,7 +1,5 @@
 pipeline {
-
-  agent { label 'kubepod' }
-
+  agent none
   environment {
     dockerImage = ''
     registry = 'hcabnettek/react-redux-petstore'
@@ -10,6 +8,7 @@ pipeline {
 
   stages {
     stage('Checkout Source') {
+      agent { label 'kubepod' }
       steps {
         git url:'https://github.com/hcabnettek/react-redux-petstore.git', branch:'master'
       }
@@ -31,12 +30,14 @@ pipeline {
     }
 
     stage('Build Docker Image') {
+      agent { label 'kubepod' }
       steps {
         dockerImage = docker.build registry
       }
     }
 
     stage('Push Docker Image') {
+      agent { label 'kubepod' }
       steps {
         script {
           docker.withRegistry('', registryCreds) {
@@ -47,6 +48,7 @@ pipeline {
     }
 
     stage('Deploy App To Cluster') {
+      agent { label 'kubepod' }
       steps {
         script {
           kubernetesDeploy(configs: "app_deploy.yml", kubeconfigId: "mykubeconfig")
