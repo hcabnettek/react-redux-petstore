@@ -29,24 +29,6 @@ pipeline {
       }
     }
 
-    stage('Build Docker Image') {
-      agent { label 'kubepod' }
-      steps {
-        dockerImage = docker.build registry
-      }
-    }
-
-    stage('Push Docker Image') {
-      agent { label 'kubepod' }
-      steps {
-        script {
-          docker.withRegistry('', registryCreds) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-
     stage('Deploy App To Cluster') {
       agent { label 'kubepod' }
       steps {
