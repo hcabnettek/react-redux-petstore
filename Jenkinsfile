@@ -24,9 +24,6 @@ pipeline {
       steps {
         sh 'yarn install'
       }
-      steps {
-        sh 'yarn build'
-      }
     }
 
     stage('Deploy App To Cluster') {
