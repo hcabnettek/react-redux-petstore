@@ -24,3 +24,18 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hcabnettek-service
+  labels:
+    app: hcabnettek-devops-project
+spec:
+  selector:
+    app: hcabnettek-devops-project
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31200
